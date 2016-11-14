@@ -25,18 +25,6 @@ class MainVC: UIViewController {
     }
     
     @IBAction func onGetAllPress(_ sender: Any) {
-        getDataArray()
-    }
-    
-    @IBAction func onGetOnePress(_ sender: Any) {
-        getDataObject()
-    }
-    
-    @IBAction func onPostDataPress(_ sender: Any) {
-        postDataObject()
-    }
-    
-    func getDataArray(){
         
         let request = Api.configureRequest(pathname: "/array", method: "GET")
         
@@ -57,11 +45,12 @@ class MainVC: UIViewController {
                 print("\(person["name"]!)")
                 
             }
-
+            
         })
+        
     }
     
-    func getDataObject(){
+    @IBAction func onGetOnePress(_ sender: Any) {
         
         let request = Api.configureRequest(pathname: "/obj/\(personCount)", method: "GET")
         
@@ -89,7 +78,7 @@ class MainVC: UIViewController {
         
     }
     
-    func postDataObject(){
+    @IBAction func onPostDataPress(_ sender: Any) {
         
         if postTextField.text! == "" { return }
         
@@ -118,6 +107,7 @@ class MainVC: UIViewController {
             }
             
         })
+        
     }
 
 }
