@@ -24,4 +24,17 @@ class Utils {
         }
     }
     
+    static func jsonParseArray(data: Data) -> Array<Any> {
+        
+        do {
+            
+            return try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! Array<Any>
+            
+        } catch {
+            
+            return []
+            
+        }
+    }
+    
 }

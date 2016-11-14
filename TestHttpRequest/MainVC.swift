@@ -9,8 +9,12 @@
 import UIKit
 import Foundation
 
-let getUrl:URL = URL(string: "http://localhost:3000/")!
-let postUrl:URL = URL(string: "http://localhost:3000/post")!
+let getObjUrl:URL = URL(string: "http://localhost:3000/get/obj")!
+let postObjUrl:URL = URL(string: "http://localhost:3000/post/obj")!
+
+let getArrUrl:URL = URL(string: "http://localhost:3000/get/array")!
+let postArrUrl:URL = URL(string: "http://localhost:3000/post/array")!
+
 let session = URLSession.shared
 
 class MainVC: UIViewController {
@@ -24,31 +28,39 @@ class MainVC: UIViewController {
     }
     
     @IBAction func onGetDataPress(_ sender: Any) {
-        getData()
+        getDataArray()
     }
     
     @IBAction func onPostDataPress(_ sender: Any) {
-        postData()
+        postDataObject()
     }
     
-    func getData(){
+    func getDataArray(){
         
-        let request = Api.configureRequest(url: getUrl, method: "GET")
+        let request = Api.configureRequest(url: getArrUrl, method: "GET")
         
-        let task = session.dataTask(with: request as URLRequest) {
-            (data, response, error) in
+        Api.sendRequest(request: request, then: { result in
             
-            guard let data = data, error == nil else {
-                print("error=\(error)")
-                return
+            let json = Utils.jsonParseArray(data: result)
+            
+            for data in json {
+                
+                if let person = data as? [String: Any] {
+                    print("\(person["name"]!)")
+                }
+                
             }
+
+        })
+    }
+    
+    func getDataObject(){
+        
+        let request = Api.configureRequest(url: getObjUrl, method: "GET")
+        
+        Api.sendRequest(request: request, then: { result in
             
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("response = \(response)")
-            }
-            
-            let json = Utils.jsonParseObject(data: data)
+            let json = Utils.jsonParseObject(data: result)
             
             if let responseData = json, json != nil {
                 
@@ -62,29 +74,17 @@ class MainVC: UIViewController {
                 
             }
             
-        }
+        })
         
-        task.resume()
     }
     
-    func postData(){
+    func postDataObject(){
         
-        let request = Api.configureRequest(url: postUrl, method: "POST", dataString: "id=1&name=joe")
+        let request = Api.configureRequest(url: postObjUrl, method: "POST", dataString: "name=suzy")
         
-        let task = session.dataTask(with: request as URLRequest) {
-            (data, response, error) in
+        Api.sendRequest(request: request, then: { result in
             
-            guard let data = data, error == nil else {
-                print("error=\(error)")
-                return
-            }
-            
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("response = \(response)")
-            }
-            
-            let json = Utils.jsonParseObject(data: data)
+            let json = Utils.jsonParseObject(data: result)
             
             if let responseData = json, json != nil {
                 
@@ -98,9 +98,7 @@ class MainVC: UIViewController {
                 
             }
             
-        }
-        
-        task.resume()
+        })
     }
 
 }

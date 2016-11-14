@@ -24,4 +24,26 @@ class Api {
         return request
     }
     
+    static func sendRequest(request: URLRequest, then: @escaping (_ result: Data) -> Void) {
+        
+        let task = session.dataTask(with: request as URLRequest) {
+            (data, response, error) in
+            
+            guard let data = data, error == nil else {
+                print("error=\(error)")
+                return
+            }
+            
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
+                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                print("response = \(response)")
+            }
+            
+            then(data)
+        }
+        
+        task.resume()
+        
+    }
+    
 }
