@@ -9,26 +9,27 @@
 import UIKit
 import Foundation
 
-let getObjUrl:URL = URL(string: "http://localhost:3000/get/obj")!
-let postObjUrl:URL = URL(string: "http://localhost:3000/post/obj")!
-
-let getArrUrl:URL = URL(string: "http://localhost:3000/get/array")!
-let postArrUrl:URL = URL(string: "http://localhost:3000/post/array")!
-
 let session = URLSession.shared
 
 class MainVC: UIViewController {
     
     @IBOutlet weak var getMessageLabel: UILabel!
     @IBOutlet weak var postMessageLabel: UILabel!
+    @IBOutlet weak var postTextField: UITextField!
+    
+    var personCount: Int = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
     
-    @IBAction func onGetDataPress(_ sender: Any) {
+    @IBAction func onGetAllPress(_ sender: Any) {
         getDataArray()
+    }
+    
+    @IBAction func onGetOnePress(_ sender: Any) {
+        getDataObject()
     }
     
     @IBAction func onPostDataPress(_ sender: Any) {
@@ -37,17 +38,23 @@ class MainVC: UIViewController {
     
     func getDataArray(){
         
-        let request = Api.configureRequest(url: getArrUrl, method: "GET")
+        let request = Api.configureRequest(pathname: "/array", method: "GET")
         
-        Api.sendRequest(request: request, then: { result in
+        Api.sendRequest(request: request, acceptStatus: 200, then: { result in
             
             let json = Utils.jsonParseArray(data: result)
             
-            for data in json {
+            self.personCount = json.count - 1
+            
+            let itemsMessage = json.count > 1 ? "items in array" : "item in array"
+            
+            DispatchQueue.main.async {
+                self.getMessageLabel?.text = "Success! \(json.count) \(itemsMessage)."
+            }
+            
+            for person in json {
                 
-                if let person = data as? [String: Any] {
-                    print("\(person["name"]!)")
-                }
+                print("\(person["name"]!)")
                 
             }
 
@@ -56,9 +63,9 @@ class MainVC: UIViewController {
     
     func getDataObject(){
         
-        let request = Api.configureRequest(url: getObjUrl, method: "GET")
+        let request = Api.configureRequest(pathname: "/obj/\(personCount)", method: "GET")
         
-        Api.sendRequest(request: request, then: { result in
+        Api.sendRequest(request: request, acceptStatus: 200, then: { result in
             
             let json = Utils.jsonParseObject(data: result)
             
@@ -66,10 +73,14 @@ class MainVC: UIViewController {
                 
                 print(responseData["message"]!)
                 print("——————————————")
+                print(responseData)
+                print("——————————————")
                 print("")
                 
+                let message = "\(responseData["message"]!) You got \(responseData["person"]!)"
+                
                 DispatchQueue.main.async {
-                    self.getMessageLabel?.text = responseData["message"] as! String?
+                    self.getMessageLabel?.text = message
                 }
                 
             }
@@ -80,9 +91,15 @@ class MainVC: UIViewController {
     
     func postDataObject(){
         
-        let request = Api.configureRequest(url: postObjUrl, method: "POST", dataString: "name=suzy")
+        if postTextField.text! == "" { return }
         
-        Api.sendRequest(request: request, then: { result in
+        let person = postTextField.text!.capitalized
+        let postName: String = "name=\(person)"
+        let request = Api.configureRequest(pathname: "/obj", method: "POST", dataString: postName)
+        
+        postTextField.text = nil
+        
+        Api.sendRequest(request: request, acceptStatus: 201, then: { result in
             
             let json = Utils.jsonParseObject(data: result)
             
@@ -92,8 +109,10 @@ class MainVC: UIViewController {
                 print("——————————————")
                 print("")
                 
+                let message = "\(responseData["message"]!) You added \(person)"
+                
                 DispatchQueue.main.async {
-                    self.postMessageLabel?.text = responseData["message"] as! String?
+                    self.postMessageLabel?.text = message
                 }
                 
             }

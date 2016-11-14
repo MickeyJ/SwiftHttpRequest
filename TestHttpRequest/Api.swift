@@ -8,9 +8,13 @@
 
 import UIKit
 
-class Api {
+struct Api {
     
-    static func configureRequest( url: URL, method: String, dataString: String? = nil ) -> URLRequest {
+    private static let baseURL: String = "http://localhost:3000"
+    
+    static func configureRequest( pathname: String, method: String, dataString: String? = nil ) -> URLRequest {
+        
+        let url: URL = URL(string: "\(baseURL)\(pathname)")!
         
         var request = URLRequest(url: url)
         
@@ -24,7 +28,7 @@ class Api {
         return request
     }
     
-    static func sendRequest(request: URLRequest, then: @escaping (_ result: Data) -> Void) {
+    static func sendRequest(request: URLRequest, acceptStatus: Int, then: @escaping (_ result: Data) -> Void) {
         
         let task = session.dataTask(with: request as URLRequest) {
             (data, response, error) in
@@ -34,8 +38,8 @@ class Api {
                 return
             }
             
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != acceptStatus {
+                print("statusCode should be \(acceptStatus), but is \(httpStatus.statusCode)")
                 print("response = \(response)")
             }
             

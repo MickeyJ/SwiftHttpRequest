@@ -9,13 +9,13 @@
 import Foundation
 
 
-class Utils {
+struct Utils {
     
     static func jsonParseObject(data: Data) -> [String: Any]? {
         
         do {
             
-            return try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? [String:Any]
+            return try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as? [String: Any]
             
         } catch {
             
@@ -24,11 +24,11 @@ class Utils {
         }
     }
     
-    static func jsonParseArray(data: Data) -> Array<Any> {
+    static func jsonParseArray(data: Data) -> Array<[String: Any]> {
         
         do {
             
-            return try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! Array<Any>
+            return try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()) as! Array<[String: Any]>
             
         } catch {
             
