@@ -9,9 +9,9 @@
 import Foundation
 
 
-struct Utils {
+struct JSON {
     
-    static func jsonParseObject(data: Data) -> [String: Any]? {
+    static func parseObject(data: Data) -> [String: Any]? {
         
         do {
             
@@ -24,7 +24,7 @@ struct Utils {
         }
     }
     
-    static func jsonParseArray(data: Data) -> Array<[String: Any]> {
+    static func parseArray(data: Data) -> Array<[String: Any]> {
         
         do {
             

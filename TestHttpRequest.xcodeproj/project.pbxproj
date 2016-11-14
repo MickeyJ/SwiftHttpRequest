@@ -13,7 +13,7 @@
 		707872791DD9144800A14848 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 707872781DD9144800A14848 /* Assets.xcassets */; };
 		7078727C1DD9144800A14848 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7078727A1DD9144800A14848 /* LaunchScreen.storyboard */; };
 		707872851DD9299E00A14848 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707872841DD9299E00A14848 /* Api.swift */; };
-		707872871DD9314000A14848 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707872861DD9314000A14848 /* Utils.swift */; };
+		707872871DD9314000A14848 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707872861DD9314000A14848 /* JSON.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +25,7 @@
 		7078727B1DD9144800A14848 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7078727D1DD9144800A14848 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		707872841DD9299E00A14848 /* Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
-		707872861DD9314000A14848 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		707872861DD9314000A14848 /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				707872841DD9299E00A14848 /* Api.swift */,
-				707872861DD9314000A14848 /* Utils.swift */,
+				707872861DD9314000A14848 /* JSON.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -169,7 +169,7 @@
 				707872851DD9299E00A14848 /* Api.swift in Sources */,
 				707872741DD9144800A14848 /* MainVC.swift in Sources */,
 				707872721DD9144800A14848 /* AppDelegate.swift in Sources */,
-				707872871DD9314000A14848 /* Utils.swift in Sources */,
+				707872871DD9314000A14848 /* JSON.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +329,7 @@
 				707872821DD9144800A14848 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -30,7 +30,7 @@ class MainVC: UIViewController {
         
         Api.sendRequest(request: request, acceptStatus: 200, then: { result in
             
-            let json = Utils.jsonParseArray(data: result)
+            let json = JSON.parseArray(data: result)
             
             self.personCount = json.count - 1
             
@@ -56,7 +56,7 @@ class MainVC: UIViewController {
         
         Api.sendRequest(request: request, acceptStatus: 200, then: { result in
             
-            let json = Utils.jsonParseObject(data: result)
+            let json = JSON.parseObject(data: result)
             
             if let responseData = json, json != nil {
                 
@@ -90,7 +90,7 @@ class MainVC: UIViewController {
         
         Api.sendRequest(request: request, acceptStatus: 201, then: { result in
             
-            let json = Utils.jsonParseObject(data: result)
+            let json = JSON.parseObject(data: result)
             
             if let responseData = json, json != nil {
                 
